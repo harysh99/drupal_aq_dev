@@ -36,6 +36,7 @@ function override_otheme() {
  * Implements hook_page_alter().
  */
 function override_page_alter(&$page) {
+  //Alter item list type to ordered list.
   if(arg(0) == 'magic' && arg(1) == 'rendered') {
     $page['content']['system_main']['rend_list']['#type'] = 'ol';
   }

@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function spy_glass_menu() {
+  $items = array();
+  $items['spy/main_pg'] = array(
+    'title' => 'Spy Theme1',
+    'page callback' => 'spy_glass_main_pg',
+    'access arguments' => array('access content'),
+  );
+  return $items;
+}
+
+/***
+ *
+ */
+function spy_glass_main_pg() {
+  $build = array();
+  $build['pg_element'] = array(
+    '#theme' => 'spy_glass_items',
+    '#title' => t('This is the first title'),
+    '#data' => t('Data saaample'),
+  );
+
+  return $build;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function spy_glass_theme() {
+return array(
+  'spy_glass_items' => array(
+    'variables' => array('title' => NULL, 'data' => NULL),
+    'template' => 'spy-glass-item',
+  )
+);
+}
+
+/**
+ *
+
+function theme_spy_glass_items($variables) {
+  $output = '<h2>' . t($variables['title']) . '</h2>';
+  $output .= '<p>' . t($variables['data']) . '</p>';
+  return $output;
+}
+ */
+
+/**
+ *
+ */
+function spy_glass_preprocess_spy_glass_items(&$variables) {
+  $variables['module_name'] = 'Spy glass';
+}
