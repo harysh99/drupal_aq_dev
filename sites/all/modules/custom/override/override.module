@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * implements hook_menu().
+ */
+function override_menu() {
+  $items = array();
+  $items['over/theme1'] = array(
+    'title' => 'Over Theme1',
+    'page callback' => 'override_otheme',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Define page callback function
+ */
+function override_otheme() {
+  $build = array();
+  $build['mark_element'] = array(
+    '#type' => 'markup',
+    '#markup' => t('Heyyy this page is to over ride themes.'),
+  );
+
+  return $build;
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function override_page_alter(&$page) {
+  if(arg(0) == 'magic' && arg(1) == 'rendered') {
+    $page['content']['system_main']['rend_list']['#type'] = 'ol';
+  }
+}

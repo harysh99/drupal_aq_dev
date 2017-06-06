@@ -39,5 +39,21 @@ function menu_magic_rendered() {
       ),
     ),
   );
+  $build['rend_list'] = array(
+    '#theme' => 'item_list',
+    '#title' => 'This is a super list',
+    '#items' => array(
+      t('Are you enjoying this tutorial'),
+      t('Yes indeed'),
+      t('Nooooo way'),
+      t('Current time is @time', array('@time' => date('r'))),
+    ),
+    '#cache' => array(
+      'keys' => array('menu_magic', 'rend_list'),
+      'bin' => 'cache',
+      'expire' => time() + 30,
+      'granularity' => DRUPAL_CACHE_PER_PAGE,
+    ),
+  );
   return $build;
 }
