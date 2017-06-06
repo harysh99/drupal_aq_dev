@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ *  implements hook_menu().
+ */
+function menu_magic_menu() {
+  $items = array();
+  $items['magic'] = array(
+    'title' => 'Magic Menu',
+    'page callback' => 'menu_magic_main_page',
+    'access arguments' => array('access content'),
+    //'type' => MENU_DEFAULT_LOCAL_TASK,
+    //'access callback' => TRUE,
+
+  );
+  $items['magic/default'] = array(
+    'title' => 'String',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+  $items['magic/tabs'] = array(
+    'title' => 'MTab',
+    'page callback' => 'menu_magic_mtabs',
+    'file' => 'menu_magic_tabs.inc',
+   // 'file path' => drupal_get_path('module', 'menu_magic'),
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['node/%node/magic'] = array(
+    'title' => 'Magic',
+    'page callback' => 'menu_magic_mtab_node',
+     'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+  );
+ $items['magic/rendered'] = array(
+   'title' => 'Rendered Page',
+   'page callback' => 'menu_magic_rendered',
+   'access callback' => TRUE,
+   'file' => 'menu_magic_tabs.inc',
+ );
+  return $items;
+}
+
+/**
+ * Page callback definition
+ */
+function menu_magic_main_page() {
+  $build = array();
+  $build['sample_text'] = array(
+   '#type' => 'markup',
+   '#markup' => '<p>' . t('Welcome to the First menu page.') . '</p>',
+  );
+
+ return $build;
+}
+
+function menu_magic_mtab_node($node) {
+  dsm($node);
+  $n_title = $node->title;
+  $build = array(
+    'node_element' => array(
+      '#type' => 'markup',
+      '#markup' => t('Yess this from a contextual menu item.<br> This is a node title : @title', array('@title' => $n_title)),
+    )
+  );
+  return $build;
+}

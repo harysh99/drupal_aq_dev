@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Drupal aq developer">
+    <serverData>
+      <paths name="Drupal aq developer">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="drupal_aq_dev" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
