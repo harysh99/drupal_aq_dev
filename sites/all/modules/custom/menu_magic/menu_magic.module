@@ -54,7 +54,7 @@ function menu_magic_main_page() {
   $build = array();
   $build['sample_text'] = array(
    '#type' => 'markup',
-   '#markup' => '<p>' . t('Welcome to the First menu page.') . '</p>',
+   '#markup' => '<p>' . check_plain('<script>alert("ssssssss");</script> Welcome to the First menu page.') . '</p>',
   );
 
  return $build;

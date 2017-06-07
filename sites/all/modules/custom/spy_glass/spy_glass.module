@@ -25,7 +25,7 @@ function spy_glass_main_pg() {
   $build['pg_element'] = array(
     '#theme' => 'spy_glass_items',
     '#title' => t('This is the first title'),
-    '#data' => t('Data saaample'),
+    '#data' => t('Data saaample') . '<br>' .  l('More', '/') . '<br>',
   );
 
   return $build;

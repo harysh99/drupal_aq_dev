@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function form_fun_menu() {
+  $items = array();
+  $items['formfun/cake'] = array(
+    'title' => 'Cake',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_fun_cake'),
+    'access arguments' => array('access content'),
+    'file' => 'form_fun.cake.inc'
+  );
+  $items['formfun/tree'] = array(
+    'title' => 'Tree',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_fun_tree'),
+    'access arguments' => array('access content'),
+    'file' => 'form_fun.tree.inc'
+  );
+  $items['formfun/states'] = array(
+    'title' => 'States',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_fun_states'),
+    'access arguments' => array('access content'),
+    'file' => 'form_fun.states.inc'
+  );
+
+  return $items;
+}
+
+/***
+ * Implements hook_form_alter().
+ */
+function form_fun_form_alter(&$form, &$form_state, $form_id) {
+
+  switch($form_id) {
+    case 'user_profile_form';
+     $form['account']['pass']['#description'] = 'To change the current user password, enter the new password in both fields.Please do not use simple passwords like 1234 etc.';
+     break;
+  }
+}
+
+/***
+ * Implements hook_form_FORM_ID_alter().
+ *
+ */
+function form_fun_form_user_register_form_alter(&$form, &$form_state, $form_id) {
+
+  $form['#validate'][] = 'form_fun_password_validate';
+  dsm($form);
+}
+
+function form_fun_password_validate($form, &$form_state) {
+  dsm($form);
+}
