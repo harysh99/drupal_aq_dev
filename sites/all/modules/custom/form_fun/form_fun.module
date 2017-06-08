@@ -38,7 +38,7 @@ function form_fun_menu() {
  * Implements hook_form_alter().
  */
 function form_fun_form_alter(&$form, &$form_state, $form_id) {
-
+  //dsm($form);
   switch($form_id) {
     case 'user_profile_form';
      $form['account']['pass']['#description'] = 'To change the current user password, enter the new password in both fields.Please do not use simple passwords like 1234 etc.';

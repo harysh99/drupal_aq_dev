@@ -1,0 +1,4 @@
+name = Database Fun
+description = Practise database operations.
+core = 7.x
+package = Drupalizeme Tutorials

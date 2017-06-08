@@ -1,0 +1,83 @@
+<?php
+
+/***
+ *
+ */
+function db_fun_menu() {
+  $items = array();
+  $items['db_fun/index'] = array(
+    'title' => 'Database fun index page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_fun_cake'),
+    'access arguments' => array('access content'),
+    'file' => 'form_fun.cake.inc'
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function db_fun_node_view($node, $view_mode, $langcode) {
+  global $user;
+  if($view_mode == 'full') {
+    $node_views = 0;
+    // Get node_views record.
+    $record = get_node_views_data($node->nid, $user->uid);
+    //krumo($record);
+    //Initialize record if record was not set.
+    if($record === FALSE) {
+      $record = new stdClass();
+      $record->nid = $node->nid;
+      $record->uid = $user->uid;
+      $record->view_count = 0;
+    }
+
+    //Increment View count by 1
+    $record->view_count ++;
+
+    insert_data_db_fun($record);
+
+    $node->content['node_views'] = array(
+      '#type' => 'markup',
+      '#markup' => t('You viewed this content @views times', array('@views' => $record->view_count)),
+    );
+    //dsm($view_mode);
+  }
+
+
+}
+
+/***
+ * Fetch a record from db_fun table
+ */
+function get_node_views_data($nid, $uid) {
+  $query = db_select('db_fun', 'n')
+    ->fields('n', array('nid', 'uid', 'view_count'))
+    ->condition('nid', $nid)
+    ->condition('uid', $uid)
+    ->addTag('get_n_views');
+  $result = $query->execute()->fetch();
+  //krumo($result);
+  return $result;
+
+}
+/***
+ * Insert a record into the db_fun table
+ */
+function insert_data_db_fun($record) {
+  $result = db_merge('db_fun')
+        ->key(array('nid' => $record->nid))
+        ->key(array('uid' => $record->uid))
+        ->fields((array) $record)
+        ->execute();
+}
+
+/***
+ * Implement hook_query_TAG_NAME_alter().
+ */
+function db_fun_query_get_n_views_alter(QueryalterableInterface $queryalterable) {
+  $conditions = & $queryalterable->getFields();
+  krumo($conditions);
+}
+
